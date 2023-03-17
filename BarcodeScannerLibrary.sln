@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.3.32819.101
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BarcodeScannerLibrary", "BarcodeScannerLibrary\BarcodeScannerLibrary.csproj", "{79399B05-9219-4F96-B21A-FF26FE7F8963}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BarcodeScannerTest", "BarcodeScannerTest\BarcodeScannerTest.csproj", "{DED82CF9-BC35-4E33-8F5C-03052389334D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{79399B05-9219-4F96-B21A-FF26FE7F8963}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{79399B05-9219-4F96-B21A-FF26FE7F8963}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{79399B05-9219-4F96-B21A-FF26FE7F8963}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{79399B05-9219-4F96-B21A-FF26FE7F8963}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DED82CF9-BC35-4E33-8F5C-03052389334D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DED82CF9-BC35-4E33-8F5C-03052389334D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DED82CF9-BC35-4E33-8F5C-03052389334D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DED82CF9-BC35-4E33-8F5C-03052389334D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {0B582CE8-9AFB-4C08-A4C6-7268B1E436A2}
+	EndGlobalSection
+EndGlobal
