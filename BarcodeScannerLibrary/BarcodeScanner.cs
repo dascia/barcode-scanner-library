@@ -6,6 +6,11 @@ namespace Dascia.BarcodeScannerLibrary
   public class BarcodeScanner : IScanner
   {
     /// <summary>
+    /// Indicates if the instance have been disposed already.
+    /// </summary>
+    bool _disposed;
+
+    /// <summary>
     /// The serial port object used too handle the data received from barcode scanner.
     /// </summary>
     private readonly SerialPort _serialPort;
@@ -38,7 +43,7 @@ namespace Dascia.BarcodeScannerLibrary
     /// <summary>
     /// Opens this instance.
     /// </summary>
-    public void Open()
+    public void Initialize()
     {
       if (!_serialPort.IsOpen) _serialPort.Open();
     }
@@ -48,7 +53,6 @@ namespace Dascia.BarcodeScannerLibrary
     /// </summary>
     /// <param name="sender">The sender.</param>
     /// <param name="e">The <see cref="SerialDataReceivedEventArgs"/> instance containing the event data.</param>
-    /// <exception cref="System.NotImplementedException"></exception>
     private void SerialDataReceived(object sender, SerialDataReceivedEventArgs e)
     {
       // EOF = ctrl+Z
@@ -58,11 +62,27 @@ namespace Dascia.BarcodeScannerLibrary
     }
 
     /// <summary>
-    /// Closess the port connected to the barcode scanner to stop listening for data.
+    /// Dispose the barcode scanner instance.
     /// </summary>
-    public void Close()
+    public void Dispose()
     {
-      if (_serialPort.IsOpen) _serialPort.Close();
+      Dispose(true);
+      GC.SuppressFinalize(this);
+    }
+
+    /// <summary>
+    /// Releases unmanaged and - optionally - managed resources.
+    /// </summary>
+    /// <param name="disposing"><c>true</c> to release both managed and unmanaged resources; <c>false</c> to release only unmanaged resources.</param>
+    protected virtual void Dispose(bool disposing)
+    {
+      if (_disposed) return;
+      if (disposing)
+      {
+        _serialPort.DataReceived -= SerialDataReceived;
+        if (_serialPort.IsOpen) _serialPort.Close();
+      }
+      _disposed = true;
     }
   }
 }

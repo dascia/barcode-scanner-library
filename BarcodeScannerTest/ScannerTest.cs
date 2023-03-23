@@ -9,7 +9,7 @@ namespace BarcodeScannerTest
     /// Test the barcode recognition.
     /// </summary>
     [Theory]
-    [InlineData("COM8", 9600, "\r")]
+    [InlineData("COM3", 9600, "\r")]
     public void BarcodeRecognizedTest(string port, int baudRate, string terminatingCharacter)
     {
       BarcodeScanner scanner = new BarcodeScanner(port, baudRate, terminatingCharacter);
@@ -20,9 +20,9 @@ namespace BarcodeScannerTest
         barCode = y;
         resetEvent.Set();
       };
-      scanner.Open();
+      scanner.Initialize();
       resetEvent.WaitOne(TimeSpan.FromSeconds(60));
-      scanner.Close();
+      scanner.Dispose();
       Assert.NotNull(barCode);
     }
   }
