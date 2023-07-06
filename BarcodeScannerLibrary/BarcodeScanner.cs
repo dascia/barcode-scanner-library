@@ -13,12 +13,13 @@ namespace Dascia.BarcodeScannerLibrary
     /// <summary>
     /// The serial port object used too handle the data received from barcode scanner.
     /// </summary>
-    private readonly SerialPort _serialPort;
+    private SerialPort _serialPort;
+		private bool _initialized;
 
-    /// <summary>
-    /// Occurs when the implementation recognizes a barcode from input read.
-    /// </summary>
-    public event EventHandler<string> BarcodeRecognized;
+		/// <summary>
+		/// Occurs when the implementation recognizes a barcode from input read.
+		/// </summary>
+		public event EventHandler<string> BarcodeRecognized;
 
     /// <summary>
     /// Raises the barcode recognized event.
@@ -31,29 +32,33 @@ namespace Dascia.BarcodeScannerLibrary
     /// </summary>
     /// <param name="port">The COM port where the barcode scanner is connected.</param>
     /// <param name="baudRate">The baud rate.</param>
-    public BarcodeScanner(string port, int baudRate = 9600, string terminatingCharacters = "\r")
-    {
-      _serialPort = new SerialPort(port, baudRate)
-      {
-        NewLine = terminatingCharacters
-      };
-      _serialPort.DataReceived += SerialDataReceived;
-    }
+    public BarcodeScanner()
+    { }
 
-    /// <summary>
-    /// Opens this instance.
-    /// </summary>
-    public void Initialize()
-    {
-      if (!_serialPort.IsOpen) _serialPort.Open();
-    }
+		/// <summary>
+		/// Initializes the barcode scanner implementation to start receiving data through the port passed as an argument.
+		/// </summary>
+		/// <param name="port">The port.</param>
+		/// <param name="baudRate">The baud rate.</param>
+		/// <param name="terminatingCharacters">The terminating characters.</param>
+		public void Initialize(string port, int baudRate = 9600, string terminatingCharacters = "\r")
+		{
+			if (_initialized) return;
+			_serialPort = new SerialPort(port, baudRate)
+			{
+				NewLine = terminatingCharacters
+			};
+			_serialPort.DataReceived += SerialDataReceived;
+			_serialPort.Open();
+			_initialized = true;
+		}
 
-    /// <summary>
-    ///  Data received from the scanner through serial port.
-    /// </summary>
-    /// <param name="sender">The sender.</param>
-    /// <param name="e">The <see cref="SerialDataReceivedEventArgs"/> instance containing the event data.</param>
-    private void SerialDataReceived(object sender, SerialDataReceivedEventArgs e)
+		/// <summary>
+		///  Data received from the scanner through serial port.
+		/// </summary>
+		/// <param name="sender">The sender.</param>
+		/// <param name="e">The <see cref="SerialDataReceivedEventArgs"/> instance containing the event data.</param>
+		private void SerialDataReceived(object sender, SerialDataReceivedEventArgs e)
     {
       // EOF = ctrl+Z
       if (e.EventType == SerialData.Eof) return;

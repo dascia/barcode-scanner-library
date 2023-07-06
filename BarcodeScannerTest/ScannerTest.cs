@@ -12,7 +12,8 @@ namespace BarcodeScannerTest
     [InlineData("COM3", 9600, "\r")]
     public void BarcodeRecognizedTest(string port, int baudRate, string terminatingCharacter)
     {
-      BarcodeScanner scanner = new BarcodeScanner(port, baudRate, terminatingCharacter);
+      BarcodeScanner scanner = new BarcodeScanner();
+			scanner.Initialize(port, baudRate, terminatingCharacter);
       AutoResetEvent resetEvent = new AutoResetEvent(false);
       string? barCode = null;
       scanner.BarcodeRecognized += (x, y) =>
@@ -20,7 +21,6 @@ namespace BarcodeScannerTest
         barCode = y;
         resetEvent.Set();
       };
-      scanner.Initialize();
       resetEvent.WaitOne(TimeSpan.FromSeconds(60));
       scanner.Dispose();
       Assert.NotNull(barCode);

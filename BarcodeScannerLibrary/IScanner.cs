@@ -15,6 +15,6 @@ namespace Dascia.BarcodeScannerLibrary
     /// <summary>
     /// Opens the port connected to the barcode scanner to start listening for data.
     /// </summary>
-    void Initialize();
+    void Initialize(string port, int baudRate = 9600, string terminatingCharacters = "\r");
   }
 }
